@@ -42,6 +42,7 @@ import {
 } from "@/index";
 import {getGlobalMessages} from "@/util";
 import {getServerMapProvider} from "@/util/config";
+import { setPauseState } from "@/endPortalPaint";
 
 export type CurrentMapPayload = {
 	worldName: string;
@@ -237,7 +238,7 @@ export const mutations: MutationTree<State> & Mutations = {
 					set.minZoom = update.payload.minZoom;
 					set.maxZoom = update.payload.maxZoom;
 					set.priority = update.payload.priority;
-					set.label = update.payload.label;
+					set.label = update.payload.label.replace(/§[0123456789a-gklmnor]/gi, '');
 					set.hidden = update.payload.hidden;
 				} else { //Otherwise create
 					state.markerSets.set(update.id, {
@@ -246,7 +247,7 @@ export const mutations: MutationTree<State> & Mutations = {
 						minZoom: update.payload.minZoom,
 						maxZoom: update.payload.maxZoom,
 						priority: update.payload.priority,
-						label: update.payload.label,
+						label: update.payload.label.replace(/§[0123456789a-gklmnor]/gi, ''),
 						hidden: update.payload.hidden,
 					});
 					nonReactiveState.markers.set(update.id, new Map());
@@ -397,6 +398,8 @@ export const mutations: MutationTree<State> & Mutations = {
 		if(!state.maps.has(mapName)) {
 			throw new RangeError(`Unknown map ${mapName}`);
 		}
+
+		setPauseState(!mapName.startsWith("Earth_the_end"));
 
 		const newWorld = state.worlds.get(worldName);
 

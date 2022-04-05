@@ -52,14 +52,19 @@ export abstract class LiveAtlasTileLayer extends TileLayer {
 		}
 
 		Object.seal(this.tileTemplate);
-
+		
 		options.maxZoom = this._mapSettings.nativeZoomLevels + this._mapSettings.extraZoomLevels;
-		options.maxNativeZoom = this._mapSettings.nativeZoomLevels;
+		if (!window.static) {
+			options.maxNativeZoom = this._mapSettings.nativeZoomLevels;
+		} else {
+			options.maxNativeZoom = 0;
+		}
 		options.zoomReverse = true;
 		options.tileSize = 128;
 		options.minZoom = 0;
 
 		Util.setOptions(this, options);
+		console.log(options);
 
 		if (options.mapSettings === null) {
 			throw new TypeError("mapSettings missing");

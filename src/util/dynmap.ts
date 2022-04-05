@@ -316,8 +316,16 @@ export function buildMarker(id: string, data: Marker): LiveAtlasPointMarker {
 		icon: data.icon || "default",
 		minZoom: typeof data.minzoom !== 'undefined' && data.minzoom > -1 ? data.minzoom : undefined,
 		maxZoom: typeof data.maxzoom !== 'undefined' && data.maxzoom > -1 ? data.maxzoom : undefined,
-		tooltip: data.markup ? stripHTML(data.label) : data.label,
-		tooltipHTML: data.markup ? data.label : undefined,
+		tooltip: (
+			data.markup ?
+				stripHTML(data.label).replace(/§[0123456789a-gklmnor]/gi, '') :
+				data.label.replace(/§[0123456789a-gklmnor]/gi, '')
+		),
+		tooltipHTML: (
+			data.markup ?
+				data.label.replace(/§[0123456789a-gklmnor]/gi, '') :
+				undefined
+		),
 		popup: data.desc || undefined,
 		isPopupHTML: true,
 	} as LiveAtlasPointMarker;
@@ -367,8 +375,16 @@ export function buildArea(id: string, area: MarkerArea): LiveAtlasAreaMarker {
 		minZoom: typeof area.minzoom !== 'undefined' && area.minzoom > -1 ? area.minzoom : undefined,
 		maxZoom: typeof area.maxzoom !== 'undefined' && area.maxzoom > -1 ? area.maxzoom : undefined,
 
-		tooltip: area.markup ? stripHTML(area.label) : area.label,
-		tooltipHTML: area.markup ? area.label : undefined,
+		tooltip: (
+			area.markup ?
+				stripHTML(area.label).replace(/§[0123456789a-gklmnor]/gi, '') :
+				area.label.replace(/§[0123456789a-gklmnor]/gi, '')
+		),
+		tooltipHTML: (
+			area.markup ?
+				area.label.replace(/§[0123456789a-gklmnor]/gi, '') :
+				undefined
+		),
 		popup: area.desc || area.label || undefined,
 		isPopupHTML: area.desc ? true : area.markup || false,
 	};

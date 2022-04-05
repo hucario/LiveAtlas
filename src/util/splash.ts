@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { setPauseState } from "@/endPortalPaint";
+
 const app = document.getElementById('app'),
 	splash = document.getElementById('splash'),
 	splashSpinner = document.getElementById('splash__spinner'),
@@ -44,6 +46,7 @@ export const showSplash = function(reset: boolean) {
 	app.setAttribute('aria-hidden', 'true');
 
 	requestAnimationFrame(function() {
+		setPauseState(false);
 		splash.style.opacity = '1';
 	});
 };

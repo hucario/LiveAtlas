@@ -75,6 +75,9 @@ export class DynmapTileLayer extends LiveAtlasTileLayer {
 		// Y is inverted for HD-map.
 		info.y = -info.y;
 		info.scaledy = info.y >> 5;
+		if (window.static) {
+			return `${info.zoom}${info.x}_${info.y}.${info.fmt}`;
+		}
 		return `${info.prefix}${info.nightday}/${info.scaledx}_${info.scaledy}/${info.zoom}${info.x}_${info.y}.${info.fmt}`;
 	}
 
@@ -83,6 +86,10 @@ export class DynmapTileLayer extends LiveAtlasTileLayer {
 	}
 
 	private getTileUrlFromName(name: string, timestamp?: number) {
+		if (window.static) {
+			return this._baseUrl + name;
+		}
+
 		const path = escape(`${this._mapSettings.world.name}/${name}`);
 		let url = `${this._baseUrl}${path}`;
 

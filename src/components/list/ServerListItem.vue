@@ -16,7 +16,7 @@
 
 <template>
 	<input :id="`server-${server.id}`" type="radio" name="server" v-bind:value="server.id" v-model="currentServer">
-	<label :for="`server-${server.id}`">{{ server.label || server.id }}</label>
+	<label :for="`server-${server.id}`">{{ server.label?.replace(/§[0123456789a-gklmnor]/gi, '') || server.id }}</label>
 </template>
 
 <script lang="ts">

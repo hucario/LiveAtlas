@@ -55,6 +55,9 @@ export default class DynmapMapProvider extends MapProvider {
 
 	constructor(config: DynmapUrlConfig) {
 		super(config);
+		if (window.static) {
+			this.updatesEnabled = false;
+		}
 		this.validateConfig();
 	}
 
@@ -87,7 +90,10 @@ export default class DynmapMapProvider extends MapProvider {
 	}
 
 	private async getMarkerSets(world: LiveAtlasWorldDefinition): Promise<void> {
-		const url = `${this.config.markers}_markers_/marker_${world.name}.json`;
+		let url = `${this.config.markers}_markers_/marker_${world.name}.json`;
+		if (window.static) {
+			url = this.config.markers;
+		}
 
 		if(this.markersAbort) {
 			this.markersAbort.abort();
@@ -269,6 +275,9 @@ export default class DynmapMapProvider extends MapProvider {
 	}
 
 	startUpdates() {
+		if (window.static) {
+			return;
+		}
 		this.updatesEnabled = true;
 		this.update();
 	}
@@ -314,7 +323,10 @@ export default class DynmapMapProvider extends MapProvider {
     }
 
 	getPlayerHeadUrl(head: HeadQueueEntry): string {
-		const baseUrl = `${this.config.markers}faces/`;
+		let baseUrl = `${this.config.markers}faces/`;
+		if (window.static) {
+			baseUrl = `/faces/`;
+		}
 
 		if(head.size === 'body') {
 			return `${baseUrl}body/${head.name}.png`;
@@ -325,7 +337,10 @@ export default class DynmapMapProvider extends MapProvider {
     }
 
     getMarkerIconUrl(icon: string): string {
-        return `${this.config.markers}_markers_/${icon}.png`;
+			if (window.static) {
+				return `/tiles/_markers_/${icon}.png`
+			}
+			return `${this.config.markers}_markers_/${icon}.png`;
     }
 
     async login(data: any) {

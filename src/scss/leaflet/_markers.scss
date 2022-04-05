@@ -188,11 +188,13 @@
 		white-space: pre-line;
 		color: var(--text-marker);
 		background: var(--background-marker);
-		padding: 0.2rem;
+		font-family: 'Minecraft', inter, sans-serif;
+		padding: 0.3rem 0.4rem;
 		display: none;
-		margin-left: 0.2rem;
+		margin-left: 0.4rem;
 		width: max-content;
 		max-width: 30rem;
+		border-radius: 3px;
 
 		@at-root .leaflet-pane--show-labels .marker__label {
 			display: block !important;

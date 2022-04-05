@@ -33,6 +33,8 @@ import "@/assets/icons/marker_point.svg";
 import "@/assets/icons/marker_line.svg";
 import "@/assets/icons/marker_area.svg";
 import "@/assets/icons/marker_circle.svg";
+import "@/assets/icons/home.svg";
+import "@/assets/icons/flag.svg";
 import {useStore} from "vuex";
 import {LiveAtlasMarkerType} from "@/util/markers";
 import {MutationTypes} from "@/store/mutation-types";
@@ -62,6 +64,12 @@ export default defineComponent({
 				return undefined;
 			}),
 			defaultIcon = computed(() => {
+				if (props.marker.tooltip.includes('Safezone') && props.marker.type === LiveAtlasMarkerType.AREA) {
+					return 'home';
+				}
+				if (!props.marker.tooltip.includes('Warzone') && props.marker.type === LiveAtlasMarkerType.AREA) {
+					return 'flag';
+				}
 				switch(props.marker.type) {
 					case LiveAtlasMarkerType.POINT:
 						return 'marker_point';
@@ -115,6 +123,10 @@ export default defineComponent({
 		.marker__location {
 			font-size: 1.4rem;
 			font-family: monospace;
+		}
+
+		.marker__label {
+			font-family: "Minecraft", "Inter", sans-serif;
 		}
 	}
 </style>

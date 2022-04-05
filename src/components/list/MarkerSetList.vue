@@ -19,7 +19,7 @@
 		<template v-for="[id, markerSet] in markerSets" :key="id">
 			<input :id="`marker-set-${id}`" type="radio" name="marker-set" v-model="currentSet" v-bind:value="markerSet">
 			<label :for="`marker-set-${id}`">
-				<span>{{ markerSet.label || id }}</span>
+				<span>{{ markerSet.label.replace(/§[0123456789a-gklmnor]/gi, '') || id }}</span>
 				<span>{{ markerCounts.get(markerSet) }} Marker(s)</span>
 			</label>
 		</template>
@@ -30,7 +30,7 @@
 			<button ref="backButton" class="markers__back" @click.prevent="currentSet = undefined">
 				<SvgIcon name="arrow"></SvgIcon>
 			</button>
-			<h3 class="markers__set">{{ currentSet.label }}</h3>
+			<h3 class="markers__set">{{ currentSet.label.replace(/§[0123456789a-gklmnor]/gi, '') }}</h3>
 		</div>
 		<MarkerList ref="submenu" :marker-set="currentSet" @keydown="onSubmenuKeydown"></MarkerList>
 	</template>

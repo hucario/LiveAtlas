@@ -47,6 +47,7 @@ declare global {
 	// noinspection JSUnusedGlobalSymbols
 	interface Window {
 		liveAtlasConfig: LiveAtlasGlobalConfig,
+		static: boolean
 	}
 
 	declare const process : {

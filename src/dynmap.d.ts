@@ -26,6 +26,7 @@ declare global {
 	// noinspection JSUnusedGlobalSymbols
 	interface Window {
 		config: { url: DynmapUrlConfig };
+		static: boolean
 	}
 }
 
